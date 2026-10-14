@@ -32,4 +32,4 @@ Pada gaya fungsional, memakai lambda yang mengingat NIM dari parameter pembuatSa
 2. "Coba jelaskan lebih lanjut mengenai tugas tersebut."
 3. "Tolong bantuk pengecekkan pada kode apakah ada error."
 - Yang saya ubah atau tolak dari saran AI, dan alasannya: Menolak saran dari ai untuk tetap memakai forder maven dari C:\tools\apache-maven-3.9.9/apache-maven-3.9.9 menjadi apache-maven-3.9.9, menjadi lebih singkat
-- Satu hal yang saya pahami lebih baik sekarang: bahwa lambda di HelloFungsional bisa memakai nim dari luar closure.
+- Satu hal yang saya pahami lebih baik sekarang: bahwa lambda di HelloFungsional bisa memakai nim dari luar closure
