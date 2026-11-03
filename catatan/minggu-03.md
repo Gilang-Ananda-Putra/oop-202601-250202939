@@ -1,4 +1,5 @@
-# Catatan Minggu NN: (topik)
+# Catatan # Minggu 03: Inheritance
+
 
 ## Yang saya kerjakan
 Melengkapi tiga subclass dari Aset: Ruang (kapasitas), Laptop (spesifikasi dannomor inventaris), dan AlatLab (laboratorium dan tingkat risiko). Tiap subclass memanggil super(kode, nama), memvalidasi atribut khususnya, menyediakan getter, dan meng-override getJenis() agar mengembalikan RUANG, LAPTOP, atau ALAT_LAB. Validasi kode dan nama tetap berlaku karena dijalankan oleh konstruktor Aset.

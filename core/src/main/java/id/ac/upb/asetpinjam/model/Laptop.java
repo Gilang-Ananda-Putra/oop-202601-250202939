@@ -4,6 +4,7 @@ package id.ac.upb.asetpinjam.model;
 public class Laptop extends Aset {
 
     // TODO minggu 3: field spesifikasi dan nomorInventaris.
+    private static final int PENGALI_DENDA = 2;
     private final String spesifikasi;
     private final String nomorInventaris;
     
@@ -34,4 +35,8 @@ public class Laptop extends Aset {
     }
 
     // Minggu 4: override hitungDenda(int).
+    @Override
+    public long hitungDenda(int hariTerlambat) {
+        return hitungDendaDasar(hariTerlambat, PENGALI_DENDA);
+    }
 }

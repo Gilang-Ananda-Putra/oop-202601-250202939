@@ -4,6 +4,7 @@ package id.ac.upb.asetpinjam.model;
 public class Ruang extends Aset {
 
     // TODO minggu 3: field kapasitas.
+    private static final int PENGALI_DENDA = 1;
     private final int kapasitas;
     
     public Ruang(String kode, String nama, int kapasitas) {
@@ -26,4 +27,8 @@ public class Ruang extends Aset {
 
 
     // Minggu 4: override hitungDenda(int).
+    @Override
+    public long hitungDenda(int hariTerlambat) {
+        return hitungDendaDasar(hariTerlambat, PENGALI_DENDA);
+    }
 }

@@ -4,6 +4,7 @@ package id.ac.upb.asetpinjam.model;
 public class AlatLab extends Aset {
 
     // TODO minggu 3: field laboratorium dan tingkatRisiko.
+    private static final int PENGALI_DENDA = 4;
     private final String laboratorium;
     private final TingkatRisiko tingkatRisiko;
     public AlatLab(String kode, String nama, String laboratorium, TingkatRisiko tingkatRisiko) {
@@ -32,4 +33,8 @@ public class AlatLab extends Aset {
         return JenisAset.ALAT_LAB;
     }
     // Minggu 4: override hitungDenda(int).
+    @Override
+    public long hitungDenda(int hariTerlambat) {
+        return hitungDendaDasar(hariTerlambat, PENGALI_DENDA);
+    }
 }
