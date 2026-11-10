@@ -11,8 +11,16 @@ import id.ac.upb.asetpinjam.model.Aset;
  */
 public class DendaProgresif implements AturanDenda {
 
+        private static final int HARI_NORMAL = 7;
+        
     @Override
     public long hitung(Aset aset, int hariTerlambat) {
-        throw new UnsupportedOperationException("TODO minggu 5: DendaProgresif.hitung");
+        long flat = aset.hitungDenda(hariTerlambat);
+        if (hariTerlambat <= HARI_NORMAL) {
+            return flat;
+        }
+        long tarifharian = aset.hitungDenda(1);
+        long hariTambahan = hariTerlambat - HARI_NORMAL;
+        return flat + tarifharian * hariTambahan / 2;
     }
 }
