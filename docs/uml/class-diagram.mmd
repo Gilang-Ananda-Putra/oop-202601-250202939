@@ -1,0 +1,213 @@
+---
+title: Class Diagram Aset-Pinjam (paket dasar id.ac.upb.asetpinjam)
+---
+classDiagram
+    direction TB
+
+    namespace kontrak {
+        class DapatDipinjam {
+            <<interface>>
+            +bisaDipinjam() boolean
+        }
+        class AturanDenda {
+            <<interface>>
+            +hitung(aset Aset, hariTerlambat int) long
+        }
+    }
+
+    namespace model {
+        class Aset {
+            <<abstract>>
+            -kode String
+            -nama String
+            -status StatusAset
+            -kondisi Kondisi
+            +Aset(kode String, nama String)
+            +getKode() String
+            +getNama() String
+            +getStatus() StatusAset
+            +getKondisi() Kondisi
+            +setNama(nama String) void
+            +setStatus(status StatusAset) void
+            +setKondisi(kondisi Kondisi) void
+            +bisaDipinjam() boolean
+            +getJenis() JenisAset
+            +hitungDenda(hariTerlambat int)* long
+            #hitungDendaDasar(hariTerlambat int, pengaliJenis int) long
+        }
+        class Ruang {
+            -PENGALI_DENDA int = 1$
+            -kapasitas int
+            +getKapasitas() int
+            +getJenis() JenisAset
+            +hitungDenda(hariTerlambat int) long
+        }
+        class Laptop {
+            -PENGALI_DENDA int = 2$
+            -spesifikasi String
+            -nomorInventaris String
+            +getSpesifikasi() String
+            +getNomorInventaris() String
+            +getJenis() JenisAset
+            +hitungDenda(hariTerlambat int) long
+        }
+        class AlatLab {
+            -PENGALI_DENDA int = 4$
+            -laboratorium String
+            -tingkatRisiko TingkatRisiko
+            +getLaboratorium() String
+            +getTingkatRisiko() TingkatRisiko
+            +getJenis() JenisAset
+            +hitungDenda(hariTerlambat int) long
+        }
+        class Peminjam {
+            <<record>>
+            +id String
+            +nama String
+        }
+        class Peminjaman {
+            -id String
+            -peminjam Peminjam
+            -aset Aset
+            -mulai LocalDateTime
+            -selesai LocalDateTime
+            -status StatusPeminjaman
+            +getId() String
+            +getPeminjam() Peminjam
+            +getAset() Aset
+            +getMulai() LocalDateTime
+            +getSelesai() LocalDateTime
+            +getStatus() StatusPeminjaman
+            +ubahStatus(baru StatusPeminjaman) void
+            +setStatusDariPenyimpanan(status StatusPeminjaman) void
+        }
+        class JenisAset {
+            <<enumeration>>
+            RUANG
+            LAPTOP
+            ALAT_LAB
+        }
+        class StatusAset {
+            <<enumeration>>
+            TERSEDIA
+            DIPINJAM
+            RUSAK
+        }
+        class Kondisi {
+            <<enumeration>>
+            BAIK
+            RUSAK_RINGAN
+            RUSAK_BERAT
+        }
+        class TingkatRisiko {
+            <<enumeration>>
+            RENDAH
+            SEDANG
+            TINGGI
+        }
+        class StatusPeminjaman {
+            <<enumeration>>
+            DIAJUKAN
+            DISETUJUI
+            DITOLAK
+            DIBATALKAN
+            DIPINJAM
+            TERLAMBAT
+            DIKEMBALIKAN
+        }
+    }
+
+    namespace denda {
+        class DendaFlat {
+            +hitung(aset Aset, hariTerlambat int) long
+        }
+        class DendaProgresif {
+            -HARI_NORMAL int = 7$
+            +hitung(aset Aset, hariTerlambat int) long
+        }
+        class LayananDenda {
+            +LayananDenda(aturan AturanDenda)
+            +hitung(aset Aset, hariTerlambat int) long
+        }
+    }
+
+    namespace jadwal {
+        class JadwalPeminjaman {
+            -daftar List~Peminjaman~
+            -kuotaLaptop int
+            +JadwalPeminjaman(kuotaLaptop int)
+            +tambah(p Peminjaman) void
+            +bentrok(baru Peminjaman) boolean
+            +semuaUrutMulai() List~Peminjaman~
+            +perAset() Map~String, List~Peminjaman~~
+            +hapus(id String) boolean
+            +ajukan(baru Peminjaman) void
+            #kuotaLaptop() int
+            #daftarMutable() List~Peminjaman~
+        }
+    }
+
+    namespace katalog {
+        class KatalogAset {
+            -daftar List~Aset~
+            +tambah(aset Aset) void
+            +semua() List~Aset~
+            +cari(kata String) List~Aset~
+            +cari(kata String, jenis JenisAset) List~Aset~
+        }
+    }
+
+    namespace config {
+        class Varian {
+            +nim String
+            +nama String
+            +dendaPerHari int
+            +batasDurasiJam int
+            +kuotaLaptop int
+            +aktif()$ Varian
+            +dariNim(nim String, nama String)$ Varian
+        }
+    }
+
+    namespace exception {
+        class AsetPinjamException
+        class PeminjamanBentrokException
+        class KuotaHabisException
+        class StatusTidakSahException
+        class DataAksesException
+    }
+
+    class RuntimeException {
+        <<java.lang>>
+    }
+
+    DapatDipinjam <|.. Aset
+    Aset <|-- Ruang
+    Aset <|-- Laptop
+    Aset <|-- AlatLab
+    AturanDenda <|.. DendaFlat
+    AturanDenda <|.. DendaProgresif
+    RuntimeException <|-- AsetPinjamException
+    AsetPinjamException <|-- PeminjamanBentrokException
+    AsetPinjamException <|-- KuotaHabisException
+    AsetPinjamException <|-- StatusTidakSahException
+    AsetPinjamException <|-- DataAksesException
+
+    Aset "*" --> "1" StatusAset : status
+    Aset "*" --> "1" Kondisi : kondisi
+    AlatLab "*" --> "1" TingkatRisiko : tingkatRisiko
+    Peminjaman "0..*" --> "1" Peminjam : peminjam
+    Peminjaman "0..*" --> "1" Aset : aset
+    Peminjaman "*" --> "1" StatusPeminjaman : status
+
+    JadwalPeminjaman "1" o-- "0..*" Peminjaman : daftar
+    KatalogAset "1" o-- "0..*" Aset : daftar
+    
+    Aset ..> Varian : hitungDendaDasar memakai aktif()
+    Aset ..> JenisAset : getJenis()
+    KatalogAset ..> JenisAset : cari(kata, jenis)
+    AturanDenda ..> Aset : parameter hitung
+    LayananDenda ..> AturanDenda : konstruktor
+    JadwalPeminjaman ..> PeminjamanBentrokException : ajukan melempar
+    JadwalPeminjaman ..> KuotaHabisException : ajukan melempar
+    Peminjaman ..> StatusTidakSahException : ubahStatus melempar

@@ -79,9 +79,7 @@ public abstract class Aset implements DapatDipinjam {
     }
 
     /** TODO minggu 3: dioverride tiap subclass agar mengembalikan jenis yang benar. */
-    public JenisAset getJenis() {
-        throw new UnsupportedOperationException("TODO minggu 3");
-    }
+        public abstract JenisAset getJenis();
 
     /** TODO minggu 4: denda keterlambatan. Dioverride tiap subclass (aturan di docs/aturan-bisnis.md). */
     public abstract long hitungDenda(int hariTerlambat);

@@ -1,0 +1,30 @@
+---
+title: Sequence Diagram pengajuan peminjaman (sukses dan bentrok)
+---
+sequenceDiagram
+    autonumber
+    actor P as Peminjam
+    participant PM as Peminjaman
+    participant J as JadwalPeminjaman
+    participant A as Aset
+    
+    P->>PM: new Peminjaman(id, peminjam, aset, mulai, selesai)
+    Note right of PM: validasi: data wajib terisi, selesai setelah mulai.<br/>status awal DIAJUKAN
+    PM-->>P: objek Peminjaman
+
+    P->>J: ajukan(baru)
+    J->>J: bentrok(baru)
+    Note right of J: hanya membandingkan peminjaman<br/>pada aset yang sama
+
+    alt tidak bentrok
+        J->>PM: getAset() dan getPeminjam()
+        PM-->>J: aset dan peminjam
+        J->>A: getJenis()
+        A-->>J: jenis aset
+        Note right of J: kuota laptop hanya berlaku untuk LAPTOP.<br/>Bila kuota habis: KuotaHabisException
+        J->>J: tambah(baru)
+        J-->>P: selesai, status DIAJUKAN
+    else bentrok
+        J--xP: PeminjamanBentrokException (menyebut kode aset)
+        Note over J: daftar jadwal tidak berubah
+    end

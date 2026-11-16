@@ -48,4 +48,11 @@ Salin setiap pertanyaan ambigu (nomor 1 sampai 7) ke sini dan jawab. Contoh:
 - Dampak ke kode: DendaProgresif.hitung (konstanta HARI_NORMAL = 7); DendaFlat dipakai sebagai pembanding.
 - Tes yang membuktikan: Minggu05AbstraksiTest.dendaProgresifMemenuhiSyaratMinimal
 
+## A-04: diagram untuk kode yang belum selesai
+- Pertanyaan: bagaimana menggambar method yang masih TODO (ajukan, bentrok, LayananDenda) pada diagram minggu 6?
+- Keputusan: diagram digambar sesuai tanda tangan method di kode dan alur dari Javadoc-nya, lalu diperbarui di minggu 14.
+- Alasan: aturan minggu 6 menuntut diagram konsisten dengan kode, bukan sketsa ideal.
+- Dampak ke kode: tidak ada; hanya dokumen docs/uml/.
+- Tes yang membuktikan: Minggu06DokumenTest (hanya memeriksa berkas ada).
+
 Tambahkan di sini keputusan lain yang Anda ambil: rumus denda progresif, perubahan skema database, format error API, dan seterusnya.
